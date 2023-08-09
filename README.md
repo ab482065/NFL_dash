@@ -1,6 +1,16 @@
-# NFL Player Statistics Dashboard
+<p align="center">
+    <a href="https://docs.python.org/3/index.html"><img src="https://img.shields.io/badge/python-%2320232a?style=for-the-badge&logo=python&logoColor=ffdd54" /></a>
+    <a href="https://fastapi.tiangolo.com/lo/"><img src="https://img.shields.io/badge/FastAPI-%2320232a?style=for-the-badge&logo=fastapi" /></a>
+    <a href="https://react.dev/"><img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" /></a>
+    <a href="https://bulma.io/"><img src="https://img.shields.io/badge/bulma-%2320232a?style=for-the-badge&logo=bulma&logoColor=white" /></a>
+</p>
 
-Welcome to the NFL Player Statistics Dashboard, a web application built using Dash and Plotly for visualizing NFL player statistics. This dashboard allows users to explore passing, rushing, and receiving statistics for quarterbacks, running backs, and wide receivers.
+<h1 align="center">✍🏽 <b>NFL Statistics Dashboard</b> 🎨</h1>
+<h4 align="center">a web application built using Dash and Plotly for visualizing NFL player statistics. This dashboard allows users to explore passing, rushing, and receiving statistics for quarterbacks, running backs, and wide receivers. </h4>
+
+<p align="center">
+    <img src="static/img/puppy-looking-up-snowy-window.png" alt="Project Banner" width=60% height=60%/>
+</p>
 
 ## Table of Contents
 
