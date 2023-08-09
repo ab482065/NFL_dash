@@ -51,33 +51,38 @@ app.layout = dbc.Container([
             {'label': 'Touchdowns', 'value': 'pass_td'},
             {'label': 'Interceptions', 'value': 'pass_int'},
         ]),
-        
         create_tab_content('Running Backs', 'RB', [
             {'label': 'Rush Yards', 'value': 'rush_yds'},
             {'label': 'Rush Touchdowns', 'value': 'rush_td'},
             {'label': 'Rushing Attempts', 'value': 'rush_att'},
         ]),
-        
         create_tab_content('Wide Receivers', 'WR', [
             {'label': 'Receiving Yards', 'value': 'rec_yds'},
             {'label': 'Receptions', 'value': 'rec'},
             {'label': 'Receiving Touchdowns', 'value': 'rec_td'},
         ]),
-        
     ]),
+    
+    # Detailed statistics for selected game ID
+    dbc.Row([
+        dbc.Col(id='qb-detailed-stats', width=6),
+    ], className="mt-4"),
+
 ])
 
 # Callbacks to update the graphs based on user input
 @app.callback(
     Output('qb-stats', 'figure'),
+    Output('qb-detailed-stats', 'children'),
     Input('qb-dropdown', 'value'),
-    Input('qb-stat-radio', 'value')
+    Input('qb-stat-radio', 'value'),
+    Input('qb-stats', 'clickData')
 )
-def update_qb_stats(selected_qb, selected_stat):
+def update_qb_stats(selected_qb, selected_stat, click_data):
+
     if selected_qb:
         qb_data = get_player_subset_of_dataset(selected_qb, ["game_id", "player", selected_stat])
-        
-        # Update the title, color condition, and y-axis label based on selected_stat
+
         if selected_stat == 'pass_yds':
             title = f"{selected_qb} Passing Yards by Game ID"
             color_condition = 250
@@ -90,12 +95,28 @@ def update_qb_stats(selected_qb, selected_stat):
             title = f"{selected_qb} Interceptions by Game ID"
             color_condition = 5
             y_label = "Interceptions"
-        
+
         fig = px.bar(qb_data, x='game_id', y=selected_stat, title=title)
         fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in qb_data[selected_stat]]))
         fig.update_xaxes(title_text="Game ID")
         fig.update_yaxes(title_text=y_label)
-        return fig
+
+        detailed_stats = None
+        if click_data is not None:
+            selected_game_id = click_data['points'][0]['x']
+            game_stats = df[(df['player'] == selected_qb) & (df['game_id'] == selected_game_id)]
+            if not game_stats.empty:
+                detailed_stats = html.Div([
+                    html.H3(f"Detailed Statistics for Game ID: {selected_game_id}"),
+                    html.Table([
+                        html.Tr([html.Th("Pass Yards"), html.Td(game_stats['pass_yds'].values[0])]),
+                        html.Tr([html.Th("Pass Attempts"), html.Td(game_stats['pass_att'].values[0])]),
+                        html.Tr([html.Th("Pass Completions"), html.Td(game_stats['pass_cmp'].values[0])]),
+                        html.Tr([html.Th("Interceptions"), html.Td(game_stats['pass_int'].values[0])]),
+                        html.Tr([html.Th("Touchdowns"), html.Td(game_stats['pass_td'].values[0])]),
+                    ]),
+                ])
+        return fig, detailed_stats
 
 @app.callback(
     Output('rb-stats', 'figure'),
@@ -122,7 +143,7 @@ def update_rb_stats(selected_rb, selected_stat):
         
         fig = px.bar(rb_data, x='game_id', y=selected_stat, title=title)
         fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in rb_data[selected_stat]]))
-        fig.update_xaxes(title_text="Game ID")
+        fig.update_xaxes(title_text="Opponent")
         fig.update_yaxes(title_text=y_label)
         return fig
 
@@ -134,7 +155,7 @@ def update_rb_stats(selected_rb, selected_stat):
 def update_wr_stats(selected_wr, selected_stat):
     if selected_wr:
         wr_data = get_player_subset_of_dataset(selected_wr, ["game_id", "player", selected_stat])
-        
+
         # Update the title, color condition, and y-axis label based on selected_stat
         if selected_stat == 'rec_yds':
             title = f"{selected_wr} Receiving Yards by Game ID"
@@ -148,10 +169,10 @@ def update_wr_stats(selected_wr, selected_stat):
             title = f"{selected_wr} Receiving Touchdowns by Game ID"
             color_condition = 1
             y_label = "Receiving Touchdowns"
-        
+
         fig = px.bar(wr_data, x='game_id', y=selected_stat, title=title)
         fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in wr_data[selected_stat]]))
-        fig.update_xaxes(title_text="Game ID")
+        fig.update_xaxes(title_text="Opponent")
         fig.update_yaxes(title_text=y_label)
         return fig
 
