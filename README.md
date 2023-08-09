@@ -43,18 +43,17 @@ Upon successful setup (see **Getting Started**), you should see the following pr
 ```
 nfl-player-stats-dashboard/
 ├── data/
-│ │
 │ └── nfl_offensive_stats.csv
-│
 ├── notebooks/
-│ │
 │ └── .ipynb_checkpoints/
-│ │     │
 │ │     └── .eda-checkpoints.ipynb
 │ └── nfl-investigative_analysis.ipynb
 ├── app.py
+│
 ├── OBJECTIVES.md
+│
 ├── Pipfile
+│
 └── README.md
 ```
 
