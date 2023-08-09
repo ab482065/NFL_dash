@@ -56,6 +56,23 @@ app.layout = html.Div([
         # Graph to display rushing stats
         dcc.Graph(id='rush-stats'),
     ]),
+    
+    # Section for receiving stats
+    html.Div([
+        html.P("Choose a wide receiver to view their receiving statistics from 2019-2022."),
+        
+        # Dropdown to select a wide receiver for receiving stats
+        dcc.Dropdown(
+            id='rec-wr-dropdown',
+            options=[{'label': player, 'value': player} for player in df[df['position'] == 'WR']['player'].unique()],
+            value=df[df['position'] == 'WR']['player'].iloc[0],  # Default selected wide receiver
+            multi=False,
+            style={'width': '50%'}
+        ),
+        
+        # Graph to display receiving stats
+        dcc.Graph(id='rec-stats'),
+    ]),
 ])
 
 # Callback to update the passing stats graph based on selected quarterback
@@ -97,6 +114,27 @@ def update_rush_stats(selected_rb):
     # Update x and y labels
     fig.update_xaxes(title_text="Game ID")
     fig.update_yaxes(title_text="Rushing Yards")
+    
+    return fig
+
+# Callback to update the receiving stats graph based on selected wide receiver
+@app.callback(
+    dash.dependencies.Output('rec-stats', 'figure'),
+    [dash.dependencies.Input('rec-wr-dropdown', 'value')]
+)
+def update_rec_stats(selected_wr):
+    # Get subset of data for the selected wide receiver
+    rec_data = get_player_subset_of_dataset(selected_wr, ["game_id", "player", "rec_yds"])
+    
+    # Create a bar graph for receiving stats
+    fig = px.bar(rec_data, x='game_id', y='rec_yds', title=f"{selected_wr} Receiving Yards per Game")
+    
+    # Customize bar colors based on receiving yards value (green if > 100, red otherwise)
+    fig.update_traces(marker=dict(color=['green' if y > 100 else 'red' for y in rec_data['rec_yds']]))
+    
+    # Update x and y labels
+    fig.update_xaxes(title_text="Game ID")
+    fig.update_yaxes(title_text="Receiving Yards")
     
     return fig
 
