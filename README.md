@@ -1,8 +1,7 @@
 <p align="center">
     <a href="https://docs.python.org/3/index.html"><img src="https://img.shields.io/badge/python-%2320232a?style=for-the-badge&logo=python&logoColor=ffdd54" /></a>
-    <a href="https://fastapi.tiangolo.com/lo/"><img src="https://img.shields.io/badge/FastAPI-%2320232a?style=for-the-badge&logo=fastapi" /></a>
-    <a href="https://react.dev/"><img src="https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" /></a>
-    <a href="https://bulma.io/"><img src="https://img.shields.io/badge/bulma-%2320232a?style=for-the-badge&logo=bulma&logoColor=white" /></a>
+    <a href="https://dash-bootstrap-components.opensource.faculty.ai/"><img src="https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white" /></a>
+    <a href="https://plotly.com/dash/"><img src="https://img.shields.io/badge/dash-008DE4?style=for-the-badge&logo=dash&logoColor=white" /></a>
 </p>
 
 <h1 align="center"><b>NFL Statistics Dashboard</b></h1>
