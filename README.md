@@ -5,7 +5,7 @@
     <a href=""><img src="https://img.shields.io/badge/Made%20with-Jupyter-orange?style=for-the-badge&logo=Jupyter" /></a>
     <a href=""><img src="https://img.shields.io/pypi/l/ansicolortags.svg" /></a>
     <a href=""><img src="https://img.shields.io/badge/Maintained%3F-yes-green.svg" /></a>
-    <a href=""><img src="https://badgen.net/github/commits/jonrosenblum/app,py" /></a>
+    <a href=""><img src="https://badgen.net/github/commits/jonrosenblum/app.py" /></a>
 </p>
 
 <h1 align="center"><b>NFL Statistics Dashboard</b></h1>
