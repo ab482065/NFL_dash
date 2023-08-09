@@ -49,11 +49,8 @@ nfl-player-stats-dashboard/
 │ │     └── .eda-checkpoints.ipynb
 │ └── nfl-investigative_analysis.ipynb
 ├── app.py
-│
 ├── OBJECTIVES.md
-│
 ├── Pipfile
-│
 └── README.md
 ```
 
