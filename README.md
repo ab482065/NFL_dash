@@ -73,7 +73,7 @@ cd nfl-player-stats-dashboard
 pipenv install
 ```
 
-1. Run the Dash app:
+4. Run the Dash app:
 
 ```bash
 pipenv run python app.py
