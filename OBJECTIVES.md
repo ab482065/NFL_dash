@@ -4,7 +4,7 @@
 
 ### **Repo Objectives**
 
-- **~~Rename GitHub (**_NOT_** local) project name to something more expressive (e.g. `nfl-dashboard` -> `nfl-analytics-dashboard`).~~**
+- ~~Rename GitHub (**_NOT_** local) project name to something more expressive (e.g. `nfl-dashboard` -> `nfl-analytics-dashboard`).~~
 - Upload project banner image to project repository.
   - Upload project banner image to assets subdirectory (e.g. `project-banner.png` -> `assets/project-banner.png`).
 - Hide `.ipynb_checkpoints/`, `.DS_Store`, and other unnecessary files/directories through better usage of `.gitignore`.
