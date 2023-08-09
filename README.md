@@ -27,10 +27,11 @@ To run the NFL Player Statistics Dashboard locally, you need the following:
 - Plotly 5.0.0 or later
 - Pandas 1.1.0 or later
 
-## Project Structure
+## Project Directory Hierarchy
 
-The project structure is organized as follows:
+Upon successful setup (see **Getting Started**), you should see the following project directory hierarchy.
 
+```
 nfl-player-stats-dashboard/
 ├── data/
 │ └── nfl_offensive_stats.csv
@@ -38,6 +39,7 @@ nfl-player-stats-dashboard/
 ├── Pipfile
 ├── Pipfile.lock
 └── README.md
+```
 
 - `data/`: Directory containing the dataset `nfl_offensive_stats.csv`.
 - `app.py`: Main application file containing the Dash app code and callbacks.
