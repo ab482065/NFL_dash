@@ -41,6 +41,35 @@ def create_tab_content(label, position, stat_options):
         ]),
     ])
 
+
+def create_comparison_tab():
+    return dbc.Tab(label="Player Comparison", children=[
+        dbc.Row([
+            dbc.Col([
+                html.P("Select Player 1:"),
+                dcc.Dropdown(
+                    id='player1-dropdown',
+                    options=[{'label': player, 'value': player} for player in df['player'].unique()],
+                    multi=False,
+                ),
+            ], width=6),
+            dbc.Col([
+                html.P("Select Player 2:"),
+                dcc.Dropdown(
+                    id='player2-dropdown',
+                    options=[{'label': player, 'value': player} for player in df['player'].unique()],
+                    multi=False,
+                ),
+            ], width=6),
+        ]),
+        html.Hr(),
+        dbc.Row([
+            dbc.Col(id='comparison-detailed-stats', width=6),
+            dbc.Col(id='comparison-detailed-viz-container', width=6),
+        ], className="mt-4"),
+    ])
+
+
 # Define the layout of the dashboard
 app.layout = dbc.Container([
     html.H1("NFL Player Statistics Dashboard", className="mt-5 text-center"),
@@ -62,6 +91,7 @@ app.layout = dbc.Container([
             {'label': 'Receptions', 'value': 'rec'},
             {'label': 'Receiving Touchdowns', 'value': 'rec_td'},
         ]),
+        create_comparison_tab(),
     ]),
 
     # Detailed statistics for selected game ID
@@ -266,7 +296,7 @@ def update_wr_stats(selected_wr, selected_stat, click_data):
                     dcc.RadioItems(
                         id='wr-detailed-viz-radio',
                         options=[
-                            {'label': 'Bar Chart', 'value': 'bar'},
+                            {'label': 'Compare to', 'value': 'bar'},
                             {'label': 'Line Chart', 'value': 'line'},
                             {'label': 'Scatter Plot', 'value': 'scatter'},
                         ],
@@ -276,6 +306,45 @@ def update_wr_stats(selected_wr, selected_stat, click_data):
                     dcc.Graph(id='wr-detailed-viz'),
                 ])
         return fig, detailed_stats, detailed_viz_container
+
+@app.callback(
+    Output('comparison-detailed-stats', 'children'),
+    Output('comparison-detailed-viz-container', 'children'),
+    Input('player1-dropdown', 'value'),
+    Input('player2-dropdown', 'value')
+)
+def update_comparison_stats(player1, player2):
+    detailed_stats = None
+    detailed_viz_container = None
+    
+    if player1 and player2:
+        player1_stats = get_player_subset_of_dataset(player1, ["game_id", "player", "pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"])
+        player2_stats = get_player_subset_of_dataset(player2, ["game_id", "player", "pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"])
+
+        # Calculate statistics and visualizations for player comparison
+        # (You can add your logic here)
+        
+        detailed_stats = html.Div([
+            html.H3("Detailed Statistics Comparison"),
+            # ... (Display comparison statistics here)
+        ])
+
+        detailed_viz_container = dbc.Container([
+            html.H3("Visualization Options for Comparison"),
+            dcc.RadioItems(
+                id='comparison-detailed-viz-radio',
+                options=[
+                    {'label': 'Bar Chart', 'value': 'bar'},
+                    {'label': 'Line Chart', 'value': 'line'},
+                    {'label': 'Scatter Plot', 'value': 'scatter'},
+                ],
+                value='bar',
+                labelStyle={'display': 'block'},
+            ),
+            dcc.Graph(id='comparison-detailed-viz'),
+        ])
+    
+    return detailed_stats, detailed_viz_container
 
 # Run the app if the script is executed
 if __name__ == '__main__':
