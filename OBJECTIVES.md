@@ -24,17 +24,25 @@
 <br>
 
 4. **Interactive Data Filters:** Allow users to filter and explore data based on specific criteria.
-
    - Implement dropdown menus or input fields to filter data by season, team, or player attributes.
    - Provide users with the ability to apply multiple filters simultaneously to refine their analysis.
    - Update visualizations and statistics dynamically based on the selected filters.
 
 <br>
 
-5. **Enhanced Styling and Branding:** Improve the visual appeal of the dashboard by applying consistent styling, branding, and layout.
-   - Implement a consistent color scheme and typography throughout the dashboard.
-   - Add a logo or header image that represents the theme of the dashboard.
-   - Use responsive design principles to ensure the dashboard looks good on various devices.
+5. **Position-Specific Tabs**
+   - Create tabs for each player position: QBs, RBs, and WRs.
+   - Display a dropdown to select a player from the chosen position.
+   - Display a radio button group to choose a specific statistic (e.g., yards, touchdowns) for the selected player.
+   - Show a bar chart representing the chosen statistic for each game the player participated in.
+   - Provide detailed statistics for a selected game upon clicking on a game in the bar chart.
+
+<br>
+
+6. **Weekly Schedule Tab**
+   _ Present the NFL game scheudle week by week
+   _ Use a table or other visualization to display game details (opponents, dates, locations, etc.).
+   - Implement interactivity to explore game details and navigate between weeks.
 
 ### **Repo Objectives**
 
