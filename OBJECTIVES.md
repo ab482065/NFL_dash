@@ -30,12 +30,12 @@
 
 <br>
 
-5. **Position-Specific Tabs**
-   - Create tabs for each player position: QBs, RBs, and WRs.
-   - Display a dropdown to select a player from the chosen position.
-   - Display a radio button group to choose a specific statistic (e.g., yards, touchdowns) for the selected player.
-   - Show a bar chart representing the chosen statistic for each game the player participated in.
-   - Provide detailed statistics for a selected game upon clicking on a game in the bar chart.
+5. **~~Position-Specific Tabs~~**
+   - ~~Create tabs for each player position: QBs, RBs, and WRs.~~
+   - ~~Display a dropdown to select a player from the chosen position.~~
+   - ~~Display a radio button group to choose a specific statistic (e.g., yards, touchdowns) for the selected player.~~
+   - ~~Show a bar chart representing the chosen statistic for each game the player participated in.~~~
+   - ~~Provide detailed statistics for a selected game upon clicking on a game in the bar chart.~~
 
 <br>
 
