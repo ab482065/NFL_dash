@@ -5,6 +5,7 @@ import dash_html_components as html
 from dash.dependencies import Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Load your CSV data
 df = pd.read_csv('./data/nfl_offensive_stats.csv')
@@ -62,16 +63,19 @@ app.layout = dbc.Container([
             {'label': 'Receiving Touchdowns', 'value': 'rec_td'},
         ]),
     ]),
-    
+
     # Detailed statistics for selected game ID
     dbc.Row([
         dbc.Col(id='qb-detailed-stats', width=6),
+        dbc.Col(id='qb-detailed-viz-container', width=6),
     ], className="mt-4"),
     dbc.Row([
         dbc.Col(id='rb-detailed-stats', width=6),
+        dbc.Col(id='rb-detailed-viz-container', width=6),
     ], className="mt-4"),
     dbc.Row([
         dbc.Col(id='wr-detailed-stats', width=6),
+        dbc.Col(id='wr-detailed-viz-container', width=6),
     ], className="mt-4"),
 
 ])
@@ -80,6 +84,7 @@ app.layout = dbc.Container([
 @app.callback(
     Output('qb-stats', 'figure'),
     Output('qb-detailed-stats', 'children'),
+    Output('qb-detailed-viz-container', 'children'),
     Input('qb-dropdown', 'value'),
     Input('qb-stat-radio', 'value'),
     Input('qb-stats', 'clickData')
@@ -107,7 +112,9 @@ def update_qb_stats(selected_qb, selected_stat, click_data):
         fig.update_xaxes(title_text="Game ID")
         fig.update_yaxes(title_text=y_label)
 
+
         detailed_stats = None
+        detailed_viz_container = None
         if click_data is not None:
             selected_game_id = click_data['points'][0]['x']
             game_stats = df[(df['player'] == selected_qb) & (df['game_id'] == selected_game_id)]
@@ -122,11 +129,27 @@ def update_qb_stats(selected_qb, selected_stat, click_data):
                         html.Tr([html.Th("Touchdowns"), html.Td(game_stats['pass_td'].values[0])]),
                     ]),
                 ])
-        return fig, detailed_stats
+
+                detailed_viz_container = dbc.Container([
+                    html.H3(f"Visualization Options for {selected_qb}"),
+                    dcc.RadioItems(
+                        id='qb-detailed-viz-radio',
+                        options=[
+                            {'label': 'Bar Chart', 'value': 'bar'},
+                            {'label': 'Line Chart', 'value': 'line'},
+                            {'label': 'Scatter Plot', 'value': 'scatter'},
+                        ],
+                        value='bar',
+                        labelStyle={'display': 'block'},
+                    ),
+                    dcc.Graph(id='qb-detailed-viz'),
+                ])
+        return fig, detailed_stats, detailed_viz_container
 
 @app.callback(
     Output('rb-stats', 'figure'),
     Output('rb-detailed-stats', 'children'),
+    Output('rb-detailed-viz-container', 'children'),
     Input('rb-dropdown', 'value'),
     Input('rb-stat-radio', 'value'),
     Input('rb-stats', 'clickData')
@@ -149,7 +172,7 @@ def update_rb_stats(selected_rb, selected_stat, click_data):
             title = f"{selected_rb} Rushing Attempts by Game ID"
             color_condition = 15
             y_label = "Rushing Attempts"
-        
+
         fig = px.bar(rb_data, x='game_id', y=selected_stat, title=title)
         fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in rb_data[selected_stat]]))
         fig.update_xaxes(title_text="Opponent")
@@ -157,6 +180,7 @@ def update_rb_stats(selected_rb, selected_stat, click_data):
 
 
         detailed_stats = None
+        detailed_viz_container = None
         if click_data is not None:
             selected_game_id = click_data['points'][0]['x']
             game_stats = df[(df['player'] == selected_rb) & (df['game_id'] == selected_game_id)]
@@ -170,12 +194,27 @@ def update_rb_stats(selected_rb, selected_stat, click_data):
                         html.Tr([html.Th("Longest Rush"), html.Td(game_stats['rush_long'].values[0])])
                     ]),
                 ])
-        return fig, detailed_stats
-        
+
+                detailed_viz_container = dbc.Container([
+                    html.H3(f"Visualization Options for {selected_rb}"),
+                    dcc.RadioItems(
+                        id='rb-detailed-viz-radio',
+                        options=[
+                            {'label': 'Bar Chart', 'value': 'bar'},
+                            {'label': 'Line Chart', 'value': 'line'},
+                            {'label': 'Scatter Plot', 'value': 'scatter'},
+                        ],
+                        value='bar',
+                        labelStyle={'display': 'block'},
+                    ),
+                    dcc.Graph(id='rb-detailed-viz'),
+                ])
+        return fig, detailed_stats, detailed_viz_container
 
 @app.callback(
     Output('wr-stats', 'figure'),
     Output('wr-detailed-stats', 'children'),
+    Output('wr-detailed-viz-container', 'children'),
     Input('wr-dropdown', 'value'),
     Input('wr-stat-radio', 'value'),
     Input('wr-stats', 'clickData')
@@ -207,6 +246,7 @@ def update_wr_stats(selected_wr, selected_stat, click_data):
 
 
         detailed_stats = None
+        detailed_viz_container = None
         if click_data is not None:
             selected_game_id = click_data['points'][0]['x']
             game_stats = df[(df['player'] == selected_wr) & (df['game_id'] == selected_game_id)]
@@ -220,7 +260,22 @@ def update_wr_stats(selected_wr, selected_stat, click_data):
                         html.Tr([html.Th("Longest Reception"), html.Td(game_stats['rec_long'].values[0])])
                     ]),
                 ])
-        return fig, detailed_stats
+
+                detailed_viz_container = dbc.Container([
+                    html.H3(f"Visualization Options for {selected_wr}"),
+                    dcc.RadioItems(
+                        id='wr-detailed-viz-radio',
+                        options=[
+                            {'label': 'Bar Chart', 'value': 'bar'},
+                            {'label': 'Line Chart', 'value': 'line'},
+                            {'label': 'Scatter Plot', 'value': 'scatter'},
+                        ],
+                        value='bar',
+                        labelStyle={'display': 'block'},
+                    ),
+                    dcc.Graph(id='wr-detailed-viz'),
+                ])
+        return fig, detailed_stats, detailed_viz_container
 
 # Run the app if the script is executed
 if __name__ == '__main__':
