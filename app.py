@@ -67,6 +67,12 @@ app.layout = dbc.Container([
     dbc.Row([
         dbc.Col(id='qb-detailed-stats', width=6),
     ], className="mt-4"),
+    dbc.Row([
+        dbc.Col(id='rb-detailed-stats', width=6),
+    ], className="mt-4"),
+    dbc.Row([
+        dbc.Col(id='wr-detailed-stats', width=6),
+    ], className="mt-4"),
 
 ])
 
@@ -120,13 +126,16 @@ def update_qb_stats(selected_qb, selected_stat, click_data):
 
 @app.callback(
     Output('rb-stats', 'figure'),
+    Output('rb-detailed-stats', 'children'),
     Input('rb-dropdown', 'value'),
-    Input('rb-stat-radio', 'value')
+    Input('rb-stat-radio', 'value'),
+    Input('rb-stats', 'clickData')
 )
-def update_rb_stats(selected_rb, selected_stat):
+def update_rb_stats(selected_rb, selected_stat, click_data):
+
     if selected_rb:
         rb_data = get_player_subset_of_dataset(selected_rb, ["game_id", "player", selected_stat])
-        
+
         # Update the title, color condition, and y-axis label based on selected_stat
         if selected_stat == 'rush_yds':
             title = f"{selected_rb} Rushing Yards by Game ID"
@@ -145,14 +154,35 @@ def update_rb_stats(selected_rb, selected_stat):
         fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in rb_data[selected_stat]]))
         fig.update_xaxes(title_text="Opponent")
         fig.update_yaxes(title_text=y_label)
-        return fig
+
+
+        detailed_stats = None
+        if click_data is not None:
+            selected_game_id = click_data['points'][0]['x']
+            game_stats = df[(df['player'] == selected_rb) & (df['game_id'] == selected_game_id)]
+            if not game_stats.empty:
+                detailed_stats = html.Div([
+                    html.H3(f"Detailed Statistics for Game ID: {selected_game_id}"),
+                    html.Table([
+                        html.Tr([html.Th("Rush Yards"), html.Td(game_stats['rush_yds'].values[0])]),
+                        html.Tr([html.Th("Rush Attempts"), html.Td(game_stats['rush_att'].values[0])]),
+                        html.Tr([html.Th("Rushing Touchdowns"), html.Td(game_stats['rush_td'].values[0])]),
+                        html.Tr([html.Th("Longest Rush"), html.Td(game_stats['rush_long'].values[0])])
+                    ]),
+                ])
+        return fig, detailed_stats
+        
 
 @app.callback(
     Output('wr-stats', 'figure'),
+    Output('wr-detailed-stats', 'children'),
     Input('wr-dropdown', 'value'),
-    Input('wr-stat-radio', 'value')
+    Input('wr-stat-radio', 'value'),
+    Input('wr-stats', 'clickData')
 )
-def update_wr_stats(selected_wr, selected_stat):
+
+def update_wr_stats(selected_wr, selected_stat, click_data):
+
     if selected_wr:
         wr_data = get_player_subset_of_dataset(selected_wr, ["game_id", "player", selected_stat])
 
@@ -174,7 +204,23 @@ def update_wr_stats(selected_wr, selected_stat):
         fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in wr_data[selected_stat]]))
         fig.update_xaxes(title_text="Opponent")
         fig.update_yaxes(title_text=y_label)
-        return fig
+
+
+        detailed_stats = None
+        if click_data is not None:
+            selected_game_id = click_data['points'][0]['x']
+            game_stats = df[(df['player'] == selected_wr) & (df['game_id'] == selected_game_id)]
+            if not game_stats.empty:
+                detailed_stats = html.Div([
+                    html.H3(f"Detailed Statistics for Game ID: {selected_game_id}"),
+                    html.Table([
+                        html.Tr([html.Th("Receiving Yards"), html.Td(game_stats['rec_yds'].values[0])]),
+                        html.Tr([html.Th("Targets"), html.Td(game_stats['targets'].values[0])]),
+                        html.Tr([html.Th("Receiving Touchdowns"), html.Td(game_stats['rec_td'].values[0])]),
+                        html.Tr([html.Th("Longest Reception"), html.Td(game_stats['rec_long'].values[0])])
+                    ]),
+                ])
+        return fig, detailed_stats
 
 # Run the app if the script is executed
 if __name__ == '__main__':
