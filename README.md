@@ -49,6 +49,7 @@ Upon successful setup (see **Getting Started**), you should see the following pr
 
 ```
 nfl-player-stats-dashboard/
+├── classes/
 ├── data/
 │ └── nfl_offensive_stats.csv
 ├── notebooks/
@@ -61,8 +62,10 @@ nfl-player-stats-dashboard/
 └── README.md
 ```
 
+- `classes/`: Directory containing OOP Objectives
 - `data/`: Directory containing the dataset `nfl_offensive_stats.csv`.
 - `app.py`: Main application file containing the Dash app code and callbacks.
+- `OBJECTIVES.md`: Project documentation for future objectives and functionality
 - `Pipfile` and `Pipfile.lock`: Files specifying project dependencies when using `pipenv`.
 - `README.md`: Project documentation providing an overview, setup instructions, and other details.
 
@@ -74,6 +77,7 @@ The NFL Player Statistics Dashboard offers the following functionalities:
 - Select a specific player from the dropdown menu.
 - Choose from various statistics for the selected player using radio items.
 - View bar graphs illustrating the selected player's statistics over different game IDs.
+- Compare player statistics and visualizations.
 
 ## Getting Started
 
@@ -122,4 +126,24 @@ Contributions to the NFL Player Statistics Dashboard are welcome! If you encount
 
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+MIT License
+
+Copyright (c) 2023 Jon Rosenblum
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
