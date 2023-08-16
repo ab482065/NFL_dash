@@ -2,10 +2,12 @@
 
 ### **Basic Objectives**
 
-1. **Customization and Personalization:** Allow users to customize the dashboard layout and content based on their preferences.
-   - Implement a dashboard settings panel that lets users choose the default view, preferred statistics, and visualizations.
-   - Provide options to rearrange and resize dashboard components to create a personalized layout.
-   - Allow users to save their customizations for future visits.
+5. **~~Position-Specific Tabs~~**
+   - ~~Create tabs for each player position: QBs, RBs, and WRs.~~
+   - ~~Display a dropdown to select a player from the chosen position.~~
+   - ~~Display a radio button group to choose a specific statistic (e.g., yards, touchdowns) for the selected player.~~
+   - ~~Show a bar chart representing the chosen statistic for each game the player participated in.~~
+   - ~~Provide detailed statistics for a selected game upon clicking on a game in the bar chart.~~
 
 <br>
 
@@ -30,12 +32,10 @@
 
 <br>
 
-5. **~~Position-Specific Tabs~~**
-   - ~~Create tabs for each player position: QBs, RBs, and WRs.~~
-   - ~~Display a dropdown to select a player from the chosen position.~~
-   - ~~Display a radio button group to choose a specific statistic (e.g., yards, touchdowns) for the selected player.~~
-   - ~~Show a bar chart representing the chosen statistic for each game the player participated in.~~
-   - ~~Provide detailed statistics for a selected game upon clicking on a game in the bar chart.~~
+5. **Customization and Personalization:** Allow users to customize the dashboard layout and content based on their preferences.
+   - Implement a dashboard settings panel that lets users choose the default view, preferred statistics, and visualizations.
+   - Provide options to rearrange and resize dashboard components to create a personalized layout.
+   - Allow users to save their customizations for future visits.
 
 <br>
 
