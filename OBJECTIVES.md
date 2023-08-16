@@ -2,7 +2,7 @@
 
 ## **Project Objectives**
 
-<div id="test"/>
+
 **~~Position-Specific Tabs~~**
 
 - ~~Create tabs for each player position: QBs, RBs, and WRs.~~
@@ -18,6 +18,7 @@
 - Implement social media sharing buttons to allow users to share interesting insights or visualizations.
 - Provide an option to generate and download high-resolution images of graphs and charts.
 
+<a id="test"/>
 **Interactive Data Filters:**
 
 - Allow users to filter and explore data based on specific criteria.
