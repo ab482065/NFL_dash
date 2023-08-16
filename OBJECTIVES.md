@@ -12,6 +12,8 @@
 - ~~Show a bar chart representing the chosen statistic for each game the player participated in.~~
 - ~~Provide detailed statistics for a selected game upon clicking on a game in the bar chart.~~
 
+<a id="objective-export-sharing-tabs" />
+
 **Export and Sharing Options:**
 
 - Enable users to export selected data and visualizations for further analysis or sharing.
