@@ -82,6 +82,8 @@ The NFL Player Statistics Dashboard offers the following functionalities:
 
 ## Project Features
 
+- [Visualize Player Data by Team Position](./OBJECTIVES.md#test)
+
 ## Getting Started
 
 1. Clone this repository to your local machine:
