@@ -82,6 +82,13 @@ The NFL Player Statistics Dashboard offers the following functionalities:
 
 ## Project Features
 
+- ~~[Create tabs for each player position and display a dropdown to select a player from the chosen position.](./OBJECTIVES.md#objective-position-specific-tabs)~~
+- [Enable users to export selected data and visualizations for further analysis or sharing.](./OBJECTIVES.md#objective-export-sharing-tabs) 
+- [Visualize Player Data by Team Position](./OBJECTIVES.md#objective-position-specific-tabs)
+- [Visualize Player Data by Team Position](./OBJECTIVES.md#objective-position-specific-tabs)
+- [Visualize Player Data by Team Position](./OBJECTIVES.md#objective-position-specific-tabs)
+
+
 ## Getting Started
 
 1. Clone this repository to your local machine:

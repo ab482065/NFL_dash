@@ -2,6 +2,8 @@
 
 ## **Project Objectives**
 
+<a id="objective-position-specific-tabs" />
+
 **~~Position-Specific Tabs~~**
 
 - ~~Create tabs for each player position: QBs, RBs, and WRs.~~
@@ -9,6 +11,8 @@
 - ~~Display a radio button group to choose a specific statistic (e.g., yards, touchdowns) for the selected player.~~
 - ~~Show a bar chart representing the chosen statistic for each game the player participated in.~~
 - ~~Provide detailed statistics for a selected game upon clicking on a game in the bar chart.~~
+
+<a id="objective-export-sharing-tabs" />
 
 **Export and Sharing Options:**
 
