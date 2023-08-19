@@ -23,8 +23,7 @@ def create_tab_content(label, position, stat_options):
     return dbc.Tab(label=label, children=[
         dbc.Row([
             dbc.Col([
-                html.P(f"Choose a {position.lower()} to view their statistics from 2019-2022.", 
-                       style = {'margin-top' : '20px', 'font-weight' : 'bold', 'font-size' : '18px'}),
+                html.P(f"Choose a {position.lower()} to view their statistics from 2019-2022."),
                 dcc.Dropdown(
                     id=f'{position.lower()}-dropdown',
                     options=[{'label': player, 'value': player} for player in df[df['position'] == position]['player'].unique()],
@@ -35,17 +34,12 @@ def create_tab_content(label, position, stat_options):
                     id=f'{position.lower()}-stat-radio',
                     options=stat_options,
                     value=stat_options[0]['value'],  # Default selected radio item
-                    labelStyle={'display': 'inline', 'margin-left' : '70px'},
-                    style={'margin-top' : '20px', 'font-weight' : 'bold', 'font-size' : '14px'},
-                    inputStyle={"margin-right": "10px"}
+                    labelStyle={'display': 'block'},
                 ),
-                dcc.Graph(id=f'{position.lower()}-stats', className='graph-div', style={'margin-top' : '20px'}),
+                dcc.Graph(id=f'{position.lower()}-stats'),
             ], width=6),
         ]),
-    ],label_style={"color": "#00AEF9", 'font-weight' : 'bold', 'font-size' : '18px'},
-      tab_style={"marginLeft": "110px"},
-      active_tab_style={"textTransform": "uppercase"},
-      activeTabClassName="fw-bold fst-italic")
+    ])
 
 
 def create_comparison_tab():
@@ -73,25 +67,15 @@ def create_comparison_tab():
             dbc.Col(id='comparison-detailed-stats', width=6),
             dbc.Col(id='comparison-detailed-viz-container', width=6),
         ], className="mt-4"),
-    ],label_style={"color": "#00AEF9", 'font-weight' : 'bold', 'font-size' : '18px'},
-      tab_style={"marginLeft": "140px"},
-      active_tab_style={"textTransform": "uppercase"},
-      activeTabClassName="fw-bold fst-italic")
+    ])
 
 
 # Define the layout of the dashboard
 app.layout = dbc.Container([
-    dbc.Row([
-        dbc.Col([
-            html.H1("NFL Player Statistics Dashboard", className = 'title-div')
-        ]),
-    ]),
-    
+    html.H1("NFL Player Statistics Dashboard", className="mt-5 text-center"),
 
     # Tabs for different positions
-    dbc.Row([
-        dbc.Col([
-            dbc.Tabs([
+    dbc.Tabs([
         create_tab_content('Quarterbacks', 'QB', [
             {'label': 'Pass Yards', 'value': 'pass_yds'},
             {'label': 'Touchdowns', 'value': 'pass_td'},
@@ -108,10 +92,7 @@ app.layout = dbc.Container([
             {'label': 'Receiving Touchdowns', 'value': 'rec_td'},
         ]),
         create_comparison_tab(),
-    ], style = {'margin-top' : '20px'}),
-        ]),
     ]),
-    
 
     # Detailed statistics for selected game ID
     dbc.Row([
@@ -156,14 +137,10 @@ def update_qb_stats(selected_qb, selected_stat, click_data):
             color_condition = 5
             y_label = "Interceptions"
 
-        fig = px.bar(qb_data, x='game_id', y=selected_stat)
-        fig.update_traces(marker=dict(color=['#3a5a40' if y > color_condition else '#c1121f' for y in qb_data[selected_stat]]),
-                          marker_line_color='rgb(8,48,107)', marker_line_width=1, opacity=0.8,)
+        fig = px.bar(qb_data, x='game_id', y=selected_stat, title=title)
+        fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in qb_data[selected_stat]]))
         fig.update_xaxes(title_text="Game ID")
         fig.update_yaxes(title_text=y_label)
-        fig.update_layout(plot_bgcolor='rgba(0,0,0,0)')
-        # fig.update_traces(marker_color='rgb(158,202,225)', marker_line_color='rgb(8,48,107)',
-        #                       marker_line_width=1.5, opacity=0.6, textfont_size=10, textangle=0, textposition="outside", cliponaxis=False)
 
 
         detailed_stats = None
@@ -227,11 +204,9 @@ def update_rb_stats(selected_rb, selected_stat, click_data):
             y_label = "Rushing Attempts"
 
         fig = px.bar(rb_data, x='game_id', y=selected_stat, title=title)
-        fig.update_traces(marker=dict(color=['#3a5a40' if y > color_condition else '#c1121f' for y in rb_data[selected_stat]]),
-                          marker_line_color='rgb(8,48,107)', marker_line_width=1, opacity=0.8,)
+        fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in rb_data[selected_stat]]))
         fig.update_xaxes(title_text="Opponent")
         fig.update_yaxes(title_text=y_label)
-        fig.update_layout(plot_bgcolor='rgba(0,0,0,0)')
 
 
         detailed_stats = None
@@ -295,12 +270,9 @@ def update_wr_stats(selected_wr, selected_stat, click_data):
             y_label = "Receiving Touchdowns"
 
         fig = px.bar(wr_data, x='game_id', y=selected_stat, title=title)
-        fig.update_traces(marker=dict(color=['#3a5a40' if y > color_condition else '#c1121f' for y in wr_data[selected_stat]]),
-                          marker_line_color='rgb(8,48,107)', marker_line_width=1, opacity=0.8,)
+        fig.update_traces(marker=dict(color=['green' if y > color_condition else 'red' for y in wr_data[selected_stat]]))
         fig.update_xaxes(title_text="Opponent")
         fig.update_yaxes(title_text=y_label)
-        fig.update_layout(plot_bgcolor='rgba(0,0,0,0)')
-        
 
 
         detailed_stats = None
