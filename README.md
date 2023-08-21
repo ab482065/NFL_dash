@@ -15,7 +15,7 @@
 <h4 align="center">A web application built using Dash and Plotly for visualizing NFL player statistics. This dashboard allows users to explore passing, rushing, and receiving statistics for quarterbacks, running backs, and wide receivers. </h4>
 
 <p align="center">
-    <img src="" alt="Project Banner" width=60% height=60%/>
+    <img src="./assets/projectbanner.png" alt="Project Banner" width=60% height=60%/>
 </p>
 
 ## Table of Contents
