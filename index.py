@@ -5,6 +5,7 @@ import dash_html_components as html
 from dash import Input, Output
 import dash_bootstrap_components as dbc
 import plotly.express as px
+import plotly.graph_objects as go
 
 # Load your CSV data
 df = pd.read_csv('./data/nfl_offensive_stats.csv')
@@ -135,37 +136,48 @@ wr_layout = dbc.Row([
 
 
 # comparison tab layout
-comparison_layout = dbc.Row(
-    [
+comparison_layout = dbc.Container([
+    dbc.Row(
+        [
+            dbc.Col([
+                html.P("Select Player 1:"),
+                dcc.Dropdown(
+                    id='player1-dropdown',
+                    options=[{'label': player, 'value': player}
+                             for player in df['player'].unique()],
+                    value=df['player'][0],
+                ),
+            ], width=6),
+            dbc.Col([
+                html.P("Select Player 2:"),
+                dcc.Dropdown(
+                    id='player2-dropdown',
+                    options=[{'label': player, 'value': player}
+                             for player in df['player'].unique()],
+                    value=df['player'][1],
+                ),
+            ], width=6),
+        ]
+    ),
+    dbc.Row([
         dbc.Col([
-            html.P("Select Player 1:"),
-            dcc.Dropdown(
-                id='player1-dropdown',
-                options=[{'label': player, 'value': player}
-                         for player in df['player'].unique()],
-                value=df['player'][0],
-            ),
+            html.Div(id='player-graph-one', children=[])
         ], width=6),
         dbc.Col([
-            html.P("Select Player 2:"),
-            dcc.Dropdown(
-                id='player2-dropdown',
-                options=[{'label': player, 'value': player}
-                         for player in df['player'].unique()],
-                value=df['player'][1],
-            ),
+            html.Div(id='player-graph-two', children=[])
         ], width=6),
-    ]
-),
-html.Hr(),
-dbc.Row([
-    dbc.Col([
-        html.Div(id='player-graph-one', children=[])
-    ], width=6),
-    dbc.Col([
-        html.Div(id='player-graph-two', children=[])
-    ], width=6),
-], className="mt-4", style={'margin-bottom': '30px'}),
+    ], className="mt-4", style={'margin-bottom': '30px'}),
+    dbc.Row([
+        dbc.Col([
+            html.Div(id='player1-detailed-stats', children=[])
+        ], width=6),
+        dbc.Col([
+            html.Div(id='player2-detailed-stats', children=[])
+        ], width=6)
+    ]),
+    html.Br()
+
+])
 
 
 app_tabs = html.Div(
@@ -436,46 +448,19 @@ def update_qb_detailed_stats(selected_wr, click_data):
 )
 def update_comparison_stats(player1, player2):
 
-    print(player1)
-    print(player2)
     player1_stats = df[df['player'] == player1]
     player2_stats = df[df['player'] == player2]
 
-    # player1_stats = get_player_subset_of_dataset(
-    #     player1, ["game_id", "player", "pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"])
-    # player2_stats = get_player_subset_of_dataset(
-    #     player2, ["game_id", "player", "pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"])
-
-    print(player2_stats)
-
-    # try:
-    #     fig1 = px.bar(player1_stats, x='game_id', y=["pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"],
-    #                   title=f'Stats for <b>{player1}</b>')
-    #     fig1.update_traces(marker_line_color='rgb(8,48,107)',
-    #                        marker_line_width=1, opacity=0.8,)
-    #     fig1.update_xaxes(title_text="<b>Game ID</b>")
-    #     fig1.update_yaxes(title_text='<b>All STATs</b>')
-    #     fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)')
-    # except:
-    fig1 = px.bar(player1_stats, x='player', y=["pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"],
-                  title=f'Stats for <b>{player1},/b>', custom_data=['player'])
+    fig1 = px.bar(player1_stats, x='Opponent_abbrev', y=["pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"],
+                  title=f'Stats for <b>{player1}</b>', custom_data=['game_id'])
     fig1.update_traces(marker_line_color='rgb(8,48,107)',
                        marker_line_width=1, opacity=0.8,)
     fig1.update_xaxes(title_text="<b>Player</b>")
     fig1.update_yaxes(title_text='<b>All STATs</b>')
     fig1.update_layout(plot_bgcolor='rgba(0,0,0,0)')
 
-    # try:
-    #     fig2 = px.bar(player2_stats, x='game_id', y=["pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"],
-    #                   title=f'Stats for <b>{player1}</b>')
-    #     fig2.update_traces(marker_line_color='rgb(8,48,107)',
-    #                        marker_line_width=1, opacity=0.8,)
-    #     fig2.update_xaxes(title_text="<b>Game ID</b>")
-    #     fig2.update_yaxes(title_text='<b>All STATs</b>')
-    #     fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)')
-    # except:
-    fig2 = px.bar(player2_stats, x='player', y=["pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"],
-                  title=f'Stats for <b>{player1},/b>', custom_data=['player'])
+    fig2 = px.bar(player2_stats, x='Opponent_abbrev', y=["pass_yds", "pass_td", "pass_int", "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"],
+                  title=f'Stats for <b>{player2}</b>', custom_data=['game_id'])
     fig2.update_traces(marker_line_color='rgb(8,48,107)',
                        marker_line_width=1, opacity=0.8,)
     fig2.update_xaxes(title_text="<b>Player</b>")
@@ -483,9 +468,57 @@ def update_comparison_stats(player1, player2):
     fig2.update_layout(plot_bgcolor='rgba(0,0,0,0)')
 
     return [
-        dcc.Graph(figure=fig1),
-        dcc.Graph(figure=fig2)
+        dcc.Graph(id='player1-graph', figure=fig1, className='graph-div'),
+        dcc.Graph(id='player2-graph', figure=fig2, className='graph-div')
     ]
+
+
+@app.callback(
+    Output('player1-detailed-stats', 'children'),
+    Input('player1-graph', 'clickData'),
+    Input('player1-dropdown', 'value'),
+    prevent_initial_call=True
+)
+def update_comparison_detailed_stats(click_data_one, player1):
+    if click_data_one is not None:
+        selected_game_id = click_data_one['points'][0]['customdata'][0]
+        game_stats = df[(df['game_id'] == selected_game_id)]
+        if not game_stats.empty:
+            game_stats = game_stats[["pass_yds", "pass_td", "pass_int",
+                                     "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"]]
+            game_stats = game_stats.T
+            game_stats = game_stats.rename(
+                columns={game_stats.columns[0]: 'Count'})
+            fig = go.Figure(
+                data=[go.Pie(labels=game_stats.index, values=game_stats.Count, hole=.3, rotation=-90)])
+            fig.update_layout(
+                title_text=f'Stats of <b>{player1}</b> for game <b>{selected_game_id}</b>')
+            # fig.update_traces(hoverinfo='label+percent', textinfo='value')
+            return dcc.Graph(figure=fig, className='graph-div')
+
+
+@app.callback(
+    Output('player2-detailed-stats', 'children'),
+    Input('player2-graph', 'clickData'),
+    Input('player2-dropdown', 'value'),
+    prevent_initial_call=True
+)
+def update_comparison_detailed_stats(click_data_one, player2):
+    if click_data_one is not None:
+        selected_game_id = click_data_one['points'][0]['customdata'][0]
+        game_stats = df[(df['game_id'] == selected_game_id)]
+        if not game_stats.empty:
+            game_stats = game_stats[["pass_yds", "pass_td", "pass_int",
+                                     "rush_yds", "rush_td", "rush_att", "rec_yds", "rec", "rec_td"]]
+            game_stats = game_stats.T
+            game_stats = game_stats.rename(
+                columns={game_stats.columns[0]: 'Count'})
+            fig = go.Figure(
+                data=[go.Pie(labels=game_stats.index, values=game_stats.Count, hole=.3, rotation=-90)])
+            fig.update_layout(
+                title_text=f'Stats of <b>{player2}</b> for game <b>{selected_game_id}</b>')
+            # fig.update_traces(hoverinfo='label+percent', textinfo='value')
+            return dcc.Graph(figure=fig, className='graph-div')
 
 
 # Run the app if the script is executed
