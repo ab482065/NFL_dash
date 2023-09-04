@@ -14,12 +14,12 @@
 
 <a id="objective-export-sharing-tabs" />
 
-**Export and Sharing Options:**
+**~~Export and Sharing Options:~~**
 
-- Enable users to export selected data and visualizations for further analysis or sharing.
-- Add buttons or links to export data as CSV or Excel files for offline analysis.
-- Implement social media sharing buttons to allow users to share interesting insights or visualizations.
-- Provide an option to generate and download high-resolution images of graphs and charts.
+- ~~Enable users to export selected data and visualizations for further analysis or sharing.~~
+- ~~Add buttons or links to export data as CSV or Excel files for offline analysis.~~
+- ~~Implement social media sharing buttons to allow users to share interesting insights or visualizations.~~
+- ~~Provide an option to generate and download high-resolution images of graphs and charts.~~
 
 **Interactive Data Filters:**
 
@@ -64,10 +64,10 @@
 - Display line charts showing the trend of key statistics (e.g., passing yards, rushing touchdowns) over the seasons for the selected players.
 - Allow users to customize the visualization by choosing different statistics and timeframes (seasons or years).
 
-## **Repository Objectives**
+## **~~Repository Objectives~~**
 
 - ~~Rename GitHub (**_NOT_** local) project name to something more expressive (e.g. `nfl-dashboard` -> `nfl-analytics-dashboard`).~~
-- Upload project banner image to project repository.
+- ~~Upload project banner image to project repository.~~
   - Upload project banner image to assets subdirectory (e.g. `project-banner.png` -> `assets/project-banner.png`).
 - ~~Hide `.ipynb_checkpoints/`, `.DS_Store`, and other unnecessary files/directories through better usage of `.gitignore`.~~
 - ~~Compartmentalize project by including `eda.ipynb` in a subdirectory of your naming choice (e.g. `eda.ipynb` -> `notebooks/eda.ipynb`).~~
