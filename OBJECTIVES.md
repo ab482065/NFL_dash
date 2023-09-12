@@ -21,6 +21,8 @@
 - ~~Implement social media sharing buttons to allow users to share interesting insights or visualizations.~~
 - ~~Provide an option to generate and download high-resolution images of graphs and charts.~~
 
+<a id="interactive-data-filters-tabs" />
+
 **Interactive Data Filters:**
 
 - Allow users to filter and explore data based on specific criteria.
@@ -35,11 +37,15 @@
 - Provide options to rearrange and resize dashboard components to create a personalized layout.
 - Allow users to save their customizations for future visits.
 
+<a id="weekly-schedule-tabs" />
+
 **Weekly Schedule Tab**
 
-- Present the NFL game scheudle week by week
+- Present the NFL game schedule week by week
 - Use a table or other visualization to display game details (opponents, dates, locations, etc.).
 - Implement interactivity to explore game details and navigate between weeks.
+
+<a id="advanced-tabs" />
 
 ## **Advanced Project Objectives**
 
