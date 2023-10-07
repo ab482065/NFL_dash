@@ -131,3 +131,12 @@ dist
 
 # DS Store
 .DS_Store
+
+user_data.db
+
+
+
+.venv/
+
+__pycache__
+data
