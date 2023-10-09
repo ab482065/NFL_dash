@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 from flask_login import LoginManager, UserMixin, login_user, logout_user, login_required, current_user
 from flask import Flask
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -8,7 +9,9 @@ from components import markdown_login
 import logging
 from users import create_connection_and_table
 import sqlite3
+from connection import DB
 
+load_dotenv()
 
 # logging.basicConfig(level=logging.WARNING)
 logging.getLogger('werkzeug').setLevel(logging.WARNING)
@@ -59,12 +62,17 @@ class User(UserMixin):
 
 @login_manager.user_loader
 def load_user(username):
-    conn = sqlite3.connect('user_data.db')
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM users WHERE username=?", (username,))
-    row = cursor.fetchone()
+    # conn = sqlite3.connect('user_data.db')
+    # cursor = conn.cursor()
+    # cursor.execute("SELECT * FROM users WHERE username=?", (username,))
+    # row = cursor.fetchone()
+    conn = DB.getConnection()
+    conn.cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
+    row = conn.cursor.fetchone()
+    conn.close()
 
     if row:
+        print(row)
         return User(row[0], row[2])  # username, hashed_password
     return None
 
@@ -208,13 +216,21 @@ def serve_signup_form():
 def register_user(n, email, username, password):
     if n:
         try:
-            conn = sqlite3.connect('user_data.db')
-            cursor = conn.cursor()
+            # conn = sqlite3.connect('user_data.db')
+            # cursor = conn.cursor()
+
+            # hashed_password = generate_password_hash(password)
+            # cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+            #                (username, email, hashed_password))
+            # conn.commit()
+            conn = DB.getConnection()
 
             hashed_password = generate_password_hash(password)
-            cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+            conn.cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
                            (username, email, hashed_password))
+            print(conn.cursor.rowcount)
             conn.commit()
+            conn.close()
 
             return 'User registered successfully!'
         except Exception as e:
