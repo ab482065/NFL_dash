@@ -7,7 +7,7 @@ import dash_bootstrap_components as dbc
 import dash
 from components import markdown_login
 import logging
-from users import create_connection_and_table
+# from users import create_connection_and_table
 import sqlite3
 from connection import DB
 
@@ -229,7 +229,7 @@ def register_user(n, email, username, password):
             conn.cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",
                            (username, email, hashed_password))
             print(conn.cursor.rowcount)
-            conn.commit()
+            # conn.commit()
             conn.close()
 
             return 'User registered successfully!'
@@ -287,5 +287,5 @@ def serve_page(pathname, data):
 from callbacks import *
 
 if __name__ == "__main__":
-    create_connection_and_table()
+    # create_connection_and_table()
     app.run_server(debug=False)
