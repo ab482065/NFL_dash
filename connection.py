@@ -31,6 +31,7 @@ class DB:
     def getConnection():
         conn = DB()
         conn.connect()
+        conn.connection.autocommit=True
         return conn
 
 # Example usage:
