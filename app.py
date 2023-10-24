@@ -9,6 +9,7 @@ from components import markdown_login
 import logging
 # from users import create_connection_and_table
 import sqlite3
+import os
 from connection import DB
 
 load_dotenv()
@@ -66,7 +67,8 @@ def load_user(username):
     # cursor = conn.cursor()
     # cursor.execute("SELECT * FROM users WHERE username=?", (username,))
     # row = cursor.fetchone()
-    conn = DB.getConnection()
+    db = DB()
+    conn = db.getConnection()
     conn.cursor.execute("SELECT * FROM users WHERE username=%s", (username,))
     row = conn.cursor.fetchone()
     conn.close()
@@ -223,7 +225,7 @@ def register_user(n, email, username, password):
             # cursor.execute("INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
             #                (username, email, hashed_password))
             # conn.commit()
-            conn = DB.getConnection()
+            conn = DB().getConnection()
 
             hashed_password = generate_password_hash(password)
             conn.cursor.execute("INSERT INTO users (username, email, password) VALUES (%s, %s, %s)",

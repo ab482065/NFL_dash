@@ -1,4 +1,5 @@
 from dotenv import load_dotenv
+from urllib.parse import urlparse
 import psycopg2
 import os
 
@@ -28,7 +29,7 @@ class DB:
             self.connection.close()
             
     
-    def getConnection():
+    def getConnection(self):
         conn = DB()
         conn.connect()
         conn.connection.autocommit=True
@@ -37,7 +38,7 @@ class DB:
 # Example usage:
 if __name__ == "__main__":
     # Replace this with your PostgreSQL connection URL
-    db_url =  os.environ['DATABASE_URL']
+    db_url = os.environ['DATABASE_URL']
 
     # Create an instance of the DatabaseWrapper class
     db_wrapper = DB(db_url)
