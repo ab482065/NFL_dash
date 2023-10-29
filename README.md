@@ -10,7 +10,7 @@
     <a href=""><img src="https://img.shields.io/badge/Made%20with-Jupyter-orange?style=for-the-badge&logo=Jupyter" /></a>
 
 </p>
-
+...
 <h1 align="center"><b>NFL Statistics Dashboard</b></h1>
 <h4 align="center">A web application built using Dash and Plotly for visualizing NFL player statistics. This dashboard allows users to explore passing, rushing, and receiving statistics for quarterbacks, running backs, and wide receivers. </h4>
 
